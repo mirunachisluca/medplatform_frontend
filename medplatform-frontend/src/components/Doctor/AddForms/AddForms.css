@@ -1,0 +1,34 @@
+.formInput {
+  width: 250px;
+  margin: 10px;
+}
+
+.submitButtonForm {
+  margin-top: 50px;
+}
+
+/* .MuiDialog-paper {
+ 
+} */
+
+.MuiDialogTitle-root {
+  text-align: center;
+}
+
+.newPatient {
+  width: 450px;
+  height: 550px;
+  text-align: center;
+}
+
+.newCaregiver {
+  width: 450px;
+  height: 470px;
+  text-align: center;
+}
+
+.newMedication {
+  width: 450px;
+  height: 350px;
+  text-align: center;
+}

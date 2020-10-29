@@ -1,0 +1,15 @@
+#medicationCard {
+  width: 350px;
+  height: 320px;
+  text-align: justify;
+  padding: 5px;
+  margin: 10px;
+}
+
+#userCard {
+  width: 350px;
+  height: 350px;
+  text-align: justify;
+  padding: 5px;
+  margin: 10px;
+}

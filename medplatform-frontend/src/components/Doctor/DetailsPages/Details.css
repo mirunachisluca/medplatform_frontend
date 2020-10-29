@@ -1,0 +1,36 @@
+#medicalRecordCard {
+  width: 350px;
+  height: 350px;
+  text-align: justify;
+  padding: 5px;
+  margin: 10px;
+  float: right;
+  margin-left: 50px;
+}
+
+#buttonsDiv {
+  width: 1100px;
+  height: 40px;
+}
+
+#deleteButton {
+  float: right;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+#editButton {
+  float: right;
+  margin-top: 5px;
+}
+
+#addMedicationButton {
+  margin-top: 5px;
+  margin-left: 0;
+}
+
+#cardsDiv {
+  width: 700px;
+  display: inline-flex;
+  margin: 20px;
+}
