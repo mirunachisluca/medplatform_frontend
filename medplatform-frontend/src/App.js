@@ -18,7 +18,7 @@ import { role } from "./roles";
 import { LoginForm } from "./components/LoginForm/LoginForm";
 import { Homepage } from "./components/Doctor/Homepage";
 import { CaregiverPatients } from "./components/Caregiver/CaregiverPatients";
-import { ProfilePage } from "./components/PatientHomepage/ProfilePage";
+import { ProfilePage } from "./components/Patient/ProfilePage";
 import { axiosInstance } from "./api/axios";
 import { ApplicationHeader } from "./components/Header/ApplicationHeader";
 import { PatientDetails } from "./components/Doctor/DetailsPages/PatientDetails";

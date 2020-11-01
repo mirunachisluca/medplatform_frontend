@@ -1,28 +1,23 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
 
-import { LOGIN_PAGE_PATH } from "../routes";
-
 function PrivateRoute({ component: Component, path, requiredRoles }) {
   const { enqueueSnackbar } = useSnackbar();
-  // const history = useHistory();
-  // console.log("=====>", history);
+  const history = useHistory();
   const token = localStorage.getItem("token");
   const roleId = parseInt(jwt_decode(token).RoleId);
   const hasRequiredRole = requiredRoles.includes(roleId);
-  const isLoggedIn = roleId;
 
   return (
     <Route
       path={path}
       render={(props) => {
-        if (isLoggedIn && hasRequiredRole) {
+        if (hasRequiredRole) {
           return <Component {...props} />;
-        } else if (isLoggedIn && !hasRequiredRole) {
-          // history.goBack();
+        } else if (!hasRequiredRole) {
           enqueueSnackbar("Oops! You are not authorized to access this page", {
             variant: "error",
             anchorOrigin: {
@@ -31,8 +26,9 @@ function PrivateRoute({ component: Component, path, requiredRoles }) {
             },
             autoHideDuration: 2000,
           });
-        } else if (!isLoggedIn) {
-          return <Redirect to={LOGIN_PAGE_PATH} />;
+          setTimeout(() => {
+            history.goBack();
+          }, 2000);
         }
       }}
     />

@@ -18,6 +18,7 @@ import { DetailsCard } from "../../Cards/DetailsCard";
 import { HOME_PAGE_PATH } from "../../../routes";
 import { EditPatientForm } from "../EditForms/EditPatientForm";
 import "./Details.css";
+import { AddMedicationPlanForm } from "../AddForms/AddMedicationPlanForm/AddMedicationPlanForm";
 
 function MedicalRecordCard({ record }) {
   return (
@@ -41,13 +42,35 @@ function MedicalRecordCard({ record }) {
 
 function PatientDetails(props) {
   const [open, setOpen] = React.useState(false);
+  const [medicationOpen, setMedicationOpen] = React.useState(false);
   const [patient, setPatient] = React.useState(null);
+  const [medicationPlans, setMedicationPlans] = React.useState({
+    isLoaded: false,
+    data: null,
+  });
+
+  const [newPlan, setNewPlan] = React.useState(0);
+
   const data = props.location.state;
   const { user } = React.useContext(AuthContext);
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
 
-  function deleteButtonHandler() {
+  React.useEffect(() => {
+    setMedicationPlans({ isLoaded: false });
+    axiosInstance
+      .get("medicationPlan/getForPatient/" + data.patientId)
+      .then((response) => {
+        if (response.status === 200) {
+          setMedicationPlans({ isLoaded: true, data: response.data });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [newPlan]);
+
+  const deleteButtonHandler = () => {
     axiosInstance
       .post("/patient/delete/" + data.patientId)
       .then((response) => {
@@ -73,23 +96,48 @@ function PatientDetails(props) {
           autoHideDuration: 2000,
         });
       });
-  }
+  };
 
-  function editButtonHandler() {
+  const editButtonHandler = () => {
     setOpen(true);
-  }
+  };
 
-  const handleClose = (value) => {
+  const handleClose = () => {
     setOpen(false);
+  };
+
+  const addMedicationPlanHandler = () => {
+    setMedicationOpen(true);
+  };
+
+  const handleMedicationClose = () => {
+    setMedicationOpen(false);
+  };
+
+  const handleNewPlan = () => {
+    setNewPlan(newPlan + 1);
   };
 
   return (
     <>
       {user.roleId === role.DOCTOR && (
         <div id="buttonsDiv">
-          <Button id="addMedicationButton" variant="outlined" color="primary">
+          <Button
+            id="addMedicationButton"
+            variant="outlined"
+            color="primary"
+            onClick={addMedicationPlanHandler}
+          >
             Add medication plan
           </Button>
+
+          <AddMedicationPlanForm
+            id={data.patientId}
+            open={medicationOpen}
+            onClose={handleMedicationClose}
+            onAdd={handleNewPlan}
+          />
+
           <Button
             id="deleteButton"
             variant="outlined"
@@ -126,11 +174,18 @@ function PatientDetails(props) {
 
         <MedicalRecordCard record={data.medicalRecordList} />
       </div>
-      <div>
-        {/* <Typography variant="h5" color="textSecondary" align="left">
+      <div id="plansDiv">
+        <Typography
+          variant="h5"
+          color="textSecondary"
+          align="center"
+          id="plansTypography"
+        >
           Medication Plans
-        </Typography> */}
-        <CollapsibleTable rows={data.medicationPlans} />
+        </Typography>
+        {medicationPlans.isLoaded && !!medicationPlans.data && (
+          <CollapsibleTable rows={medicationPlans.data} />
+        )}
       </div>
     </>
   );

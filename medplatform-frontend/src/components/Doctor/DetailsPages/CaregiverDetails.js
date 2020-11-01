@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
@@ -88,6 +88,14 @@ function CaregiverDetails(props) {
         address={caregiver ? caregiver.name : data.address}
       />
 
+      <Typography
+        variant="h5"
+        color="textSecondary"
+        align="center"
+        id="patientsTypography"
+      >
+        Patients
+      </Typography>
       <DataTable columns={patientsHeader} data={data.patientsList} />
     </>
   );

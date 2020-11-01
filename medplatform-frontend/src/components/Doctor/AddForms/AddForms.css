@@ -11,6 +11,47 @@
  
 } */
 
+.selectInput {
+  width: 250px;
+}
+
+.medicationOption {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  padding: 10px;
+  margin: 10px;
+}
+.medicationButtonsDiv {
+  display: inline-flexbox;
+}
+
+.medicationButtonsDiv .newButton {
+  float: left;
+  margin-left: 100px;
+  margin-bottom: 30px;
+}
+
+.medicationButtonsDiv .saveButton {
+  float: right;
+  margin-right: 100px;
+  margin-bottom: 30px;
+}
+
+#addMedicationPlanDialog .MuiDialog-paper {
+  min-height: 450px;
+  width: 450px;
+  text-align: center;
+}
+
+.startDateInput {
+  width: 250px;
+  margin: 15px;
+}
+
+.endDateInput {
+  width: 250px;
+}
+
 .MuiDialogTitle-root {
   text-align: center;
 }

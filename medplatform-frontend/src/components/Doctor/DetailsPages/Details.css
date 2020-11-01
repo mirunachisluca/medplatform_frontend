@@ -34,3 +34,17 @@
   display: inline-flex;
   margin: 20px;
 }
+
+#plansDiv {
+  margin-bottom: 50px;
+  display: flexbox;
+}
+
+#plansTypography {
+  margin-bottom: 15px;
+}
+
+#patientsTypography {
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
