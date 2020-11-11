@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://medplatformapi.herokuapp.com",
+  baseURL: "https://medplatformapi2.herokuapp.com/",
 });
 
 export { axiosInstance };
