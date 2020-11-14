@@ -1,17 +1,32 @@
-image: node:latest
-
-before_script:
-    - echo xd
-
+   
 stages:
-    - production
+  - build
+  - deploy
+  
 
-production:
-  type: deploy
-  stage: production
+cache:
+  paths:
+    - node_modules/
+    
+variables:
+  APP_NAME: medplatformapp
+
+build:
+  stage: build
   image: node:latest
   script:
-    - git remote add heroku-origin https://heroku:$HEROKU_API_KEY@git.heroku.com/$FRONT_APP_NAME.git
-    - git push heroku-origin HEAD:master --force
-  only:
-    - master
+    - npm install --progress=false
+    - npm run build
+
+deploy:
+    image: docker:latest
+    services:
+        - docker:dind
+    stage: deploy
+    script:
+        - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
+        - docker pull $CI_REGISTRY_IMAGE:latest
+        - docker tag $CI_REGISTRY_IMAGE:latest $HEROKU_REGISTRY_IMAGE:latest
+        - docker login --username=_ --password=$HEROKU_API_KEY $HEROKU_REGISTRY
+        - docker push $HEROKU_REGISTRY_IMAGE:latest
+        - docker run --rm -e HEROKU_API_KEY=$HEROKU_API_KEY wingrunr21/alpine-heroku-cli container:release web --app $APP_NAME
