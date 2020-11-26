@@ -56,7 +56,8 @@ function AddMedicationPlanForm({ id, open, onClose, onAdd }) {
     setMedication(updatedMedication);
   };
 
-  const addMedicationPlanHandler = () => {
+  const addMedicationPlanHandler = (e) => {
+    e.preventDefault();
     medication.forEach(
       (element) => (element.MedicationId = parseInt(element.MedicationId))
     );
@@ -70,7 +71,6 @@ function AddMedicationPlanForm({ id, open, onClose, onAdd }) {
       .post("/medicationPlan/insert", medicationPlan)
       .then((response) => {
         if (response.status === 200) {
-          onAdd();
           enqueueSnackbar("Medication plan added successfully!", {
             variant: "success",
             anchorOrigin: {
@@ -79,6 +79,8 @@ function AddMedicationPlanForm({ id, open, onClose, onAdd }) {
             },
             autoHideDuration: 2000,
           });
+          onAdd();
+          onClose();
         }
       })
       .catch((error) => {
@@ -91,7 +93,6 @@ function AddMedicationPlanForm({ id, open, onClose, onAdd }) {
           autoHideDuration: 2000,
         });
       });
-    onClose();
   };
 
   return (
